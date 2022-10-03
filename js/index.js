@@ -1,4 +1,4 @@
-// camera, scene and renderer setup
+// setup
 const cameraFOV = 75;
 const cameraNear = 0.1;
 const cameraFar = 1000;
@@ -8,6 +8,8 @@ const camera = new THREE.PerspectiveCamera(cameraFOV,
     viewportWidth/viewportHeight,
     cameraNear, cameraFar);
 camera.position.setZ(5);
+var clock = new THREE.Clock();
+var keyboard = new KeyboardState();
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer(camera, scene);
 renderer.setSize(viewportWidth, viewportHeight);
@@ -38,8 +40,22 @@ const ball = new THREE.Mesh(
 scene.add(ball);
 for(var i = 0; i < 2; i++) scene.add(paddles[i]);
 
+function checkPlayerInput() {
+    keyboard.update();
+    var dy = 5 * clock.getDelta();
+    if(keyboard.pressed('W'))
+        paddles[player1].translateY(dy);
+    if(keyboard.pressed('S'))
+        paddles[player1].translateY(-dy);
+    if(keyboard.pressed('O'))
+        paddles[player1].translateY(dy);
+    if(keyboard.pressed('L'))
+        paddles[player1].translateY(-dy);
+}
+
 function animate() {
     requestAnimationFrame(animate);
+    checkPlayerInput();
     renderer.render(scene, camera);
 }
 animate();
