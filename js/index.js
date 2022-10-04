@@ -81,8 +81,8 @@ function update_ball() {
     for(var i = 0; i < 2; i++) {
         var c = check_collision(i);
         if(c == 1) {
-            if(ballDx < 0) ballDx -= .05;
-            else ballDx += .05;
+            if(ballDx < 0) ballDx -= .01;
+            else ballDx += .01;
             ballDx = -ballDx;
         }
     }
